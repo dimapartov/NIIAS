@@ -1,32 +1,26 @@
 package com.example.niias.services;
 
-import com.example.niias.repositories.AdminRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import com.example.niias.models.User;
+import com.example.niias.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import java.util.Collections;
+
+import java.util.Optional;
 
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
 
-    private AdminRepository adminRepository;
-
-    public UserDetailsServiceImpl(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
-    }
+    @Autowired
+    private UserRepository userRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return adminRepository.findAdminByUsername(username)
-                .map(user ->
-                        new User(user.getUsername(),
-                                user.getPassword(),
-                                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
-                )).orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
+        Optional<User> user = userRepository.findUserByUsername(username);
+        return user.map(com.example.niias.config.UserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
     }
 }

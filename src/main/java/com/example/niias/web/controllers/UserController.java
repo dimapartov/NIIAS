@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/user")
+public class UserController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "admin-login";
+        return "user-login";
     }
 
     @GetMapping("/panel")
-    public String getAdminPanelPage() {
-        return "admin-panel";
+    public String getUserPanelPage() {
+        return "user-panel";
     }
 }

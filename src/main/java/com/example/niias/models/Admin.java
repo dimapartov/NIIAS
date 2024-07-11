@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "admins")
+public class Admin {
 
     private long id;
     private String username;
@@ -13,7 +13,13 @@ public class User {
     private String role;
 
 
-    protected User() {}
+    protected Admin() {}
+
+    public Admin(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
 
     @Id

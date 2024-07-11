@@ -1,31 +1,82 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .login-container h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .login-container .form-control {
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 22px);
+            margin: 10px 0;
+        }
+        .login-container .form-control:focus {
+            border-color: #999999;
+        }
+        .login-container .btn {
+            background-color: #e4002b;
+            color: #ffffff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .login-container .btn:hover {
+            background-color: #cc0025;
+        }
+    </style>
+</head>
 <body class="d-flex flex-column h-100">
 <main class="flex-shrink-0">
     <div class="container">
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="jumbotron text-center rounded col-md-8 align-self-center pt-5">
-                <div class="justify-content-center">
-                    <h1>Login</h1>
-                </div>
-                <form th:action="@{/user/login}" th:method="post" class="m-md-auto w-50 pb-3">
+            <div class="login-container text-center col-md-8 align-self-center">
+                <h1>Вход в учетную запись</h1>
+                <form th:action="@{/user/login}" th:method="post">
                     <div class="mb-3">
-                        <label class="form-label" for="username">Username</label>
                         <input id="username"
                                name="username"
                                th:value="${userName}"
-                               type="text" class="form-control text-center"/>
+                               type="text" class="form-control"
+                               placeholder="Имя пользователя или E-mail"/>
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label" for="password">Password</label>
                         <input id="password"
                                name="password"
-                               type="password" class="form-control text-center"/>
+                               type="password" class="form-control"
+                               placeholder="Пароль"/>
                     </div>
-
-                    <button type="submit" class="btn btn-secondary">Login</button>
+                    <button type="submit" class="btn">Вход</button>
                 </form>
             </div>
         </div>

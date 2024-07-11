@@ -23,4 +23,8 @@ public class UserService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.saveAndFlush(newUser);
     }
+    public boolean existsByUsername(String username) {
+        Optional<User> user = userRepository.findUserByUsername(username);
+        return user.isPresent();
+    }
 }

@@ -2,9 +2,84 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
+    <title>Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+        }
+        .login-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .login-button a {
+            text-decoration: none;
+            color: #000000;
+            font-size: 24px;
+        }
+        .login-button a::before {
+            content: '⟶';
+            margin-right: 8px;
+        }
+        .title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 50px;
+        }
+        .title .red {
+            color: #E4002B;
+        }
+        .title .blue {
+            color: #004A80;
+        }
+        .center-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .center-button a {
+            text-decoration: none;
+        }
+        .center-button button {
+            background-color: #ffffff;
+            color: #E4002B;
+            font-size: 24px;
+            padding: 10px 20px;
+            border: 2px solid #E4002B;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .center-button button:hover {
+            background-color: #E4002B;
+            color: #ffffff;
+        }
+        .center-button button::after {
+            color: #004A80;
+            margin-left: 8px;
+        }
+    </style>
 </head>
 <body>
-
+<div class="login-button">
+    <a href="/user/login"></a>
+</div>
+<div>
+    <div class="title">
+        <span class="red">КАЛЬКУЛЯТОР</span> <span class="blue">РАСЧЕТА<br>СТОИМОСТИ ПРОЕКТА</span>
+    </div>
+    <div class="center-button">
+        <a href="/calculate">
+            <button>РАССЧИТАТЬ</button>
+        </a>
+    </div>
+</div>
 </body>
 </html>

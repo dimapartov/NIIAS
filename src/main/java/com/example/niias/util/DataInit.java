@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class DataInit implements CommandLineRunner {
 
@@ -19,7 +18,11 @@ public class DataInit implements CommandLineRunner {
     }
 
     private void seedData() {
-        User user = new User("admin", "admin", "ROLE_ADMIN");
-        userService.registerUser(user);
+        if (!userService.existsByUsername("admin")) {
+            User user = new User("admin", "admin", "ROLE_ADMIN");
+            userService.registerUser(user);
+        } else {
+            System.out.println("User 'admin' already exists.");
+        }
     }
 }

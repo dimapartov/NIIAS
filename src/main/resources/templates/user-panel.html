@@ -4,7 +4,26 @@
     <meta charset="UTF-8">
     <title>Admin Panel</title>
 </head>
+
 <body>
 
+<main>
+    <form th:action="@{/user/create-parameter}" th:method="post" th:object="${newParameterModel}">
+        <label for="name">Name</label>
+        <input th:field="*{name}" type="text" id="name" name="name">
+
+        <label for="type">Type</label>
+        <input th:field="*{type}" type="text" id="type" name="type">
+
+        <label for="price">Price</label>
+        <input th:field="*{fixedPrice}" type="number" id="price" name="price">
+
+        <h4>
+            <button type="submit">Add parameter</button>
+        </h4>
+    </form>
+</main>
+
 </body>
+
 </html>

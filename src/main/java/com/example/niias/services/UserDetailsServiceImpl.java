@@ -1,9 +1,11 @@
 package com.example.niias.services;
 
+import com.example.niias.config.UserDetailsImpl;
 import com.example.niias.models.User;
 import com.example.niias.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
 
 
 @Service
-public class UserDetailsServiceImpl implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -20,7 +22,8 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByUsername(username);
-        return user.map(com.example.niias.config.UserDetails::new)
+        return user.map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
     }
+
 }

@@ -41,7 +41,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                 authorizeHttpRequests -> authorizeHttpRequests
                                         .requestMatchers("/", "/calculator", "/user/login").permitAll()
-                                        .requestMatchers("/user/panel").authenticated()
+                                        .requestMatchers("/user/panel", "/user/create-parameter").authenticated()
         )
         .formLogin(
                 formLogin -> formLogin

@@ -18,4 +18,5 @@ public class UserController {
     public String getUserPanelPage() {
         return "user-panel";
     }
+
 }

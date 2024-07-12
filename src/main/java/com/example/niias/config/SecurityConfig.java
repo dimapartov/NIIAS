@@ -40,7 +40,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                 authorizeHttpRequests -> authorizeHttpRequests
-                                        .requestMatchers("/", "/user/login").permitAll()
+                                        .requestMatchers("/", "/calculator", "/user/login").permitAll()
                                         .requestMatchers("/user/panel").authenticated()
         )
         .formLogin(
@@ -49,7 +49,7 @@ public class SecurityConfig {
                              .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                              .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                              .defaultSuccessUrl("/user/panel")
-                             .failureForwardUrl("/")
+                             .failureForwardUrl("/") // сделать редирект на ошибки
         );
         return http.build();
     }

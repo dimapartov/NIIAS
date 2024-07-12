@@ -40,6 +40,6 @@ public class UserController {
     @PostMapping("/create-parameter")
     public String createParameter(CreateParameterViewModel newParameterModel) {
         parameterServiceImpl.addParameter(newParameterModel);
-        return "redirect:/calculator";
+        return "redirect:/user/panel";
     }
 }

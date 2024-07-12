@@ -12,8 +12,13 @@
         <label for="name">Name</label>
         <input th:field="*{name}" type="text" id="name" name="name">
 
-        <label for="type">Type</label>
-        <input th:field="*{type}" type="text" id="type" name="type">
+        <label>Type</label>
+        <div>
+            <input th:field="*{type}" type="radio" id="common" name="type" value="Common">
+            <label for="common">Common</label>
+            <input th:field="*{type}" type="radio" id="uncommon" name="type" value="Uncommon">
+            <label for="uncommon">Uncommon</label>
+        </div>
 
         <label for="price">Price</label>
         <input th:field="*{fixedPrice}" type="number" id="price" name="price">

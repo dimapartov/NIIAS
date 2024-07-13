@@ -81,6 +81,7 @@
         }
 
     </style>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
     <div class="container">
@@ -91,7 +92,11 @@
                     <input type="text" id="name" name="name" placeholder="Название" required>
                 </div>
                 <div>
-                    <input type="text" id="type" name="type" placeholder="Тип" required>
+                    <select id="type" name="type" required>
+                        <option value="" selected>Выберите тип</option>
+                        <option value="common">Common</option>
+                        <option value="uncommon">Uncommon</option>
+                    </select>
                 </div>
                 <div>
                     <input type="number" step="0.01" id="fixedCost" name="fixedCost" placeholder="Фиксированная стоимость">

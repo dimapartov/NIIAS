@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Panel</title>
+    <title>Расчет стоимости</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+            background-image: url('static/fon.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .block {
+            margin-bottom: 20px;
+        }
+        .selected-parameters {
+            margin-bottom: 20px;
+        }
+        .total-cost {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <div class="selected-parameters" id="selected-parameters">
+        <h3>Выбранные параметры</h3>
+        <ul id="parameter-list"></ul>
+    </div>
+    <div class="section">
+        <div class="block">
+            <h3>ВЫБОР ПАРАМЕТРОВ ДЛЯ РАСЧЕТА</h3>
+            <form id="publicForm">
+                <label for="publicParameter">Инфраструктура общего пользования</label>
+                <select id="publicParameter" name="publicParameter" required>
+                    <option disabled selected>Параметр</option>
+                    <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}" th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр</option>
+                </select>
+                <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient" placeholder="Коэффициент">
+                <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
+            </form>
+        </div>
+        <div class="block">
+            <form id="privateForm">
+                <label for="privateParameter">Инфраструктура необщего пользования</label>
+                <select id="privateParameter" name="privateParameter" required>
+                    <option disabled selected>Параметр</option>
+                    <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}" th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр</option>
+                </select>
+                <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient" placeholder="Коэффициент">
+                <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
+            </form>
+        </div>
+    </div>
+    <div class="section">
+        <div class="block">
+            <div class="header">
+                <h3>КОНТАКТНАЯ ИНФОРМАЦИЯ</h3>
+            </div>
+            <form id="contactForm">
+                <input type="text" id="name" name="name" placeholder="Имя" required>
+                <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
+                <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required>
+                <button type="submit">РАССЧИТАТЬ</button>
+            </form>
+            <div class="total-cost">
+                ИТОГОВАЯ СТОИМОСТЬ: <span id="total-cost">0р</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const selectedParameters = [];
+    const parameterList = document.getElementById('parameter-list');
+    const totalCostElement = document.getElementById('total-cost');
 
+    function addParameter(parameterName, fixedCost, coefficient) {
+        const totalCost = fixedCost * coefficient;
+        selectedParameters.push({ parameterName, totalCost });
+        const listItem = document.createElement('li');
+        listItem.textContent = `${parameterName} - ${totalCost}р`;
+        parameterList.appendChild(listItem);
+        updateTotalCost();
+    }
+
+    function updateTotalCost() {
+        const total = selectedParameters.reduce((acc, param) => acc + param.totalCost, 0);
+        totalCostElement.textContent = `${total}р`;
+    }
+
+    document.getElementById('publicForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const selectElement = document.getElementById('publicParameter');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const parameterName = selectedOption.text;
+        const fixedCost = Number(selectedOption.getAttribute('data-fixedcost'));
+        const coefficient = Number(document.getElementById('publicCoefficient').value) || 1;
+        addParameter(parameterName, fixedCost, coefficient);
+    });
+
+    document.getElementById('privateForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const selectElement = document.getElementById('privateParameter');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const parameterName = selectedOption.text;
+        const fixedCost = Number(selectedOption.getAttribute('data-fixedcost'));
+        const coefficient = Number(document.getElementById('privateCoefficient').value) || 1;
+        addParameter(parameterName, fixedCost, coefficient);
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        alert(`ИТОГОВАЯ СТОИМОСТЬ: ${totalCostElement.textContent}`);
+    });
+</script>
 </body>
 </html>

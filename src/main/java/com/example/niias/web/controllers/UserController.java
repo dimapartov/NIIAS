@@ -1,5 +1,7 @@
 package com.example.niias.web.controllers;
 
+import com.example.niias.services.ParameterService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+    @Autowired
+    private ParameterService parameterService;
 
     @GetMapping("/login")
     public String getLoginPage(Model model, String error) {
@@ -18,7 +23,9 @@ public class UserController {
     }
 
     @GetMapping("/panel")
-    public String getUserPanelPage() {
-        return "redirect:/admin/parameters";
+    public String getUserPanelPage(Model model) {
+        model.addAttribute("parametersCommonType", parameterService.getParametersByType("common"));
+        model.addAttribute("parametersUncommonType", parameterService.getParametersByType("uncommon"));
+        return "user-panel";
     }
 }

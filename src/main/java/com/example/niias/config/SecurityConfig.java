@@ -40,15 +40,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                         authorizeHttpRequests -> authorizeHttpRequests
-                                .requestMatchers("/", "/user/login").permitAll()
-                                .requestMatchers("/user/panel", "/admin/**").authenticated()
+                                .requestMatchers("/", "/user/**").permitAll()
+                                .requestMatchers("/admin/**").authenticated()
                 )
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/user/login")
                                 .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                                 .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-                                .defaultSuccessUrl("/admin/parameters")
+                                .defaultSuccessUrl("/admin/parameters", true)
                                 .failureForwardUrl("/user/login?error=true")
                 );
         return http.build();

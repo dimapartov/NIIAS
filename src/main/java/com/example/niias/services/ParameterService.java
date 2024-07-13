@@ -29,4 +29,8 @@ public class ParameterService {
     public void deleteParameter(Long id) {
         parameterRepository.deleteById(id);
     }
+
+    public List<Parameter> getParametersByType(String type) {
+        return parameterRepository.findAllByTypeEquals(type);
+    }
 }

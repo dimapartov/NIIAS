@@ -12,25 +12,29 @@
             align-items: center;
             height: 100vh;
             background-color: #ffffff;
-            background-image: url('/images/фон_главная.png');
+            background-image: url('static/fon.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
+
         .login-button {
             position: absolute;
             top: 10px;
             right: 10px;
         }
+
         .login-button a {
             text-decoration: none;
             color: #000000;
             font-size: 24px;
         }
+
         .login-button a::before {
             content: '⟶';
             margin-right: 8px;
         }
+
         .title {
             text-align: center;
             font-size: 36px;
@@ -38,20 +42,25 @@
             color: #333333;
             margin-bottom: 50px;
         }
+
         .title .red {
             color: #E4002B;
         }
+
         .title .blue {
             color: #004A80;
         }
+
         .center-button {
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .center-button a {
             text-decoration: none;
         }
+
         .center-button button {
             background-color: #ffffff;
             color: #E4002B;
@@ -61,10 +70,12 @@
             border-radius: 20px;
             cursor: pointer;
         }
+
         .center-button button:hover {
             background-color: #E4002B;
             color: #ffffff;
         }
+
         .center-button button::after {
             color: #004A80;
             margin-left: 8px;
@@ -76,14 +87,11 @@
     <a href="/user/login"></a>
 </div>
 <div>
-    <div class="image-container">
-        <img src="/images/фон_главная.png" alt="Your Image">
-    </div>
     <div class="title">
         <span class="red">КАЛЬКУЛЯТОР</span> <span class="blue">РАСЧЕТА<br>СТОИМОСТИ ПРОЕКТА</span>
     </div>
     <div class="center-button">
-        <a href="/calculate">
+        <a href="/user/panel">
             <button>РАССЧИТАТЬ</button>
         </a>
     </div>

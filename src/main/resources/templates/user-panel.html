@@ -88,11 +88,30 @@
 
     function addParameter(parameterName, fixedCost, coefficient) {
         const totalCost = fixedCost * coefficient;
-        selectedParameters.push({ parameterName, totalCost });
+        const parameterId = Date.now();
+        selectedParameters.push({ parameterId, parameterName, totalCost });
+
         const listItem = document.createElement('li');
         listItem.textContent = `${parameterName} - ${totalCost}р`;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Удалить';
+        deleteButton.style.marginLeft = '10px';
+        deleteButton.onclick = () => deleteParameter(parameterId);
+
+        listItem.appendChild(deleteButton);
         parameterList.appendChild(listItem);
+
         updateTotalCost();
+    }
+
+    function deleteParameter(parameterId) {
+        const index = selectedParameters.findIndex(param => param.parameterId === parameterId);
+        if (index !== -1) {
+            selectedParameters.splice(index, 1);
+            parameterList.removeChild(parameterList.childNodes[index]);
+            updateTotalCost();
+        }
     }
 
     function updateTotalCost() {

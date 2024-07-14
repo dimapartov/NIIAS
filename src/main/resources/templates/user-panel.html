@@ -11,10 +11,11 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('/static/fon.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-image: url("/static/images/fon.jpg");
+            background-attachment: fixed;
         }
 
         .home-button {
@@ -165,9 +166,12 @@
                 <label for="publicParameter">Инфраструктура общего пользования</label>
                 <select id="publicParameter" name="publicParameter" required>
                     <option disabled selected>Параметр</option>
-                    <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}" th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр</option>
+                    <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}"
+                            th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр
+                    </option>
                 </select>
-                <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient" placeholder="Коэффициент">
+                <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient"
+                       placeholder="Коэффициент">
                 <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
             </form>
         </div>
@@ -176,9 +180,12 @@
                 <label for="privateParameter">Инфраструктура необщего пользования</label>
                 <select id="privateParameter" name="privateParameter" required>
                     <option disabled selected>Параметр</option>
-                    <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}" th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр</option>
+                    <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}"
+                            th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр
+                    </option>
                 </select>
-                <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient" placeholder="Коэффициент">
+                <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient"
+                       placeholder="Коэффициент">
                 <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
             </form>
         </div>
@@ -208,7 +215,7 @@
     function addParameter(parameterName, fixedCost, coefficient) {
         const totalCost = fixedCost * coefficient;
         const parameterId = Date.now();
-        selectedParameters.push({ parameterId, parameterName, totalCost });
+        selectedParameters.push({parameterId, parameterName, totalCost});
 
         const listItem = document.createElement('li');
         listItem.textContent = `${parameterName} - ${totalCost}р`;

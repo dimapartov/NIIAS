@@ -195,14 +195,15 @@
             <div class="header">
                 <h3>КОНТАКТНАЯ ИНФОРМАЦИЯ</h3>
             </div>
-            <form id="contactForm">
+            <form id="contactForm" th:action="@{/user/sendMail}" method="get">
                 <input type="text" id="name" name="name" placeholder="Имя" required>
                 <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
                 <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required>
-                <button type="submit">ОТПРАВИТЬ НА ПОЧТУ</button>
+                <input type="hidden" id="totalCost" name="totalCost">
+                <button type="submit">ОТПРАВИТЬ ЗАПРОС НА ПОЧТУ</button>
             </form>
             <div class="total-cost">
-                ИТОГОВАЯ СТОИМОСТЬ: <span id="total-cost">0р</span>
+                ИТОГОВАЯ СТОИМОСТЬ: <span id="total-cost-display">0р</span>
             </div>
         </div>
     </div>
@@ -210,7 +211,8 @@
 <script>
     const selectedParameters = [];
     const parameterList = document.getElementById('parameter-list');
-    const totalCostElement = document.getElementById('total-cost');
+    const totalCostElement = document.getElementById('total-cost-display');
+    const totalCostInputElement = document.getElementById('totalCost');
 
     function addParameter(parameterName, fixedCost, coefficient) {
         const totalCost = fixedCost * coefficient;
@@ -243,6 +245,7 @@
     function updateTotalCost() {
         const total = selectedParameters.reduce((acc, param) => acc + param.totalCost, 0);
         totalCostElement.textContent = `${total}р`;
+        totalCostInputElement.value = `${total}р`;
     }
 
     document.getElementById('publicForm').addEventListener('submit', function (event) {
@@ -267,7 +270,10 @@
 
     document.getElementById('contactForm').addEventListener('submit', function (event) {
         event.preventDefault();
-        alert(`ИТОГОВАЯ СТОИМОСТЬ: ${totalCostElement.textContent}`);
+        const totalCost = totalCostElement.textContent;
+        totalCostInputElement.value = totalCost;
+        alert(`ВАШ ЗАПРОС УСПЕШНО ДОСТАВЛЕН. ИТОГОВАЯ СТОИМОСТЬ: ${totalCost}`);
+        this.submit();
     });
 </script>
 </body>

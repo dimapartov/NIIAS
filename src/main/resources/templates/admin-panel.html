@@ -138,7 +138,8 @@
             <div>
                 <select id="id" name="id" required>
                     <option value="" disabled selected>Параметр</option>
-                    <option th:each="parameter : ${parameters}" th:value="${parameter.id}"
+                    <option th:each="parameter : ${parameters}"
+                            th:value="${parameter.id}"
                             th:text="${parameter.name}"></option>
                 </select>
             </div>

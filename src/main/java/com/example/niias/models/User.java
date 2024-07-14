@@ -1,5 +1,6 @@
 package com.example.niias.models;
 
+
 import jakarta.persistence.*;
 
 
@@ -13,9 +14,12 @@ public class User {
     private String roles;
 
 
-    protected User() {}
+    protected User() {
+
+    }
 
     public User(String username, String password, String roles) {
+
         this.username = username;
         this.password = password;
         this.roles = roles;

@@ -165,7 +165,7 @@
             <form id="publicForm">
                 <label for="publicParameter">Инфраструктура общего пользования</label>
                 <select id="publicParameter" name="publicParameter" required>
-                    <option disabled selected>Параметр</option>
+                    <option value="" disabled selected>Параметр</option>
                     <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}"
                             th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр
                     </option>
@@ -179,7 +179,7 @@
             <form id="privateForm">
                 <label for="privateParameter">Инфраструктура необщего пользования</label>
                 <select id="privateParameter" name="privateParameter" required>
-                    <option disabled selected>Параметр</option>
+                    <option value="" disabled selected>Параметр</option>
                     <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}"
                             th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр
                     </option>

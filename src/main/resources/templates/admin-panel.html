@@ -119,13 +119,14 @@
             </div>
             <div>
                 <select id="type" name="type" required>
-                    <option value="" selected>Выберите тип</option>
-                    <option value="common">Common</option>
-                    <option value="uncommon">Uncommon</option>
+                    <option value="" disabled selected>Выберите тип</option>
+                    <option value="common">Инфраструктура общего пользования</option>
+                    <option value="uncommon">Инфраструктура необщего пользования</option>
                 </select>
             </div>
             <div>
-                <input type="number" step="0.01" id="fixedCost" name="fixedCost" placeholder="Фиксированная стоимость" required min="0.01">
+                <input type="number" step="0.01" id="fixedCost" name="fixedCost" placeholder="Фиксированная стоимость"
+                       required min="0.01">
             </div>
             <button type="submit">Добавить параметр</button>
         </form>
@@ -135,7 +136,7 @@
         <h2>Удаление параметра</h2>
         <form th:action="@{/admin/parameters/delete}" method="post">
             <div>
-                <select id="id" name="id">
+                <select id="id" name="id" required>
                     <option value="" disabled selected>Параметр</option>
                     <option th:each="parameter : ${parameters}" th:value="${parameter.id}"
                             th:text="${parameter.name}"></option>

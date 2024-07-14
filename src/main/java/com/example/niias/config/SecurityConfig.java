@@ -41,15 +41,16 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                         authorizeHttpRequests -> authorizeHttpRequests
                                 .requestMatchers("/", "/user/**", "/static/**").permitAll()
-                                .requestMatchers("/admin/**").authenticated()
-                )
+                                .requestMatchers("/admin/**").authenticated())
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/user/login")
-                                .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-                                .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
+                                .usernameParameter(
+                                        UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                                .passwordParameter(
+                                        UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                                 .defaultSuccessUrl("/admin/parameters", true)
-                                .failureForwardUrl("/user/login?error=true")
+                                .failureUrl("/user/login?error=true") // Redirect to login page with error parameter
                 );
         return http.build();
     }

@@ -149,12 +149,47 @@
         .selected-parameters ul li button:hover {
             background-color: #C00023;
         }
+
+        #modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #close-modal {
+            background-color: #E4002B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #close-modal:hover {
+            background-color: #C00023;
+        }
+
     </style>
 </head>
 <body>
 <a href="/" class="home-button">Главная</a>
 <div class="container">
-    <a href="/" class="home-button">Главная</a>
     <div class="selected-parameters" id="selected-parameters">
         <h3>Выбранные параметры</h3>
         <ul id="parameter-list"></ul>
@@ -195,7 +230,7 @@
             <div class="header">
                 <h3>КОНТАКТНАЯ ИНФОРМАЦИЯ</h3>
             </div>
-            <form id="contactForm" th:action="@{/user/sendMail}" method="get">
+            <form id="contactForm" action="/mail/sendMail" method="get">
                 <input type="text" id="name" name="name" placeholder="Имя" required>
                 <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
                 <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required>
@@ -207,6 +242,13 @@
             </div>
         </div>
     </div>
+    <div id="modal" style="display:none;">
+        <div id="modal-content">
+            <p id="modal-message"></p>
+            <button id="close-modal">Закрыть</button>
+        </div>
+    </div>
+
 </div>
 <script>
     const selectedParameters = [];
@@ -270,11 +312,25 @@
 
     document.getElementById('contactForm').addEventListener('submit', function (event) {
         event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
         const totalCost = totalCostElement.textContent;
-        totalCostInputElement.value = totalCost;
-        alert(`ВАШ ЗАПРОС УСПЕШНО ДОСТАВЛЕН. ИТОГОВАЯ СТОИМОСТЬ: ${totalCost}`);
-        this.submit();
+
+        fetch(`/mail/sendMail?name=${name}&phone=${phone}&email=${email}&totalCost=${totalCost}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('modal-message').textContent = data;
+                document.getElementById('modal').style.display = 'block';
+            })
+            .catch(error => console.error('Ошибка:', error));
     });
+
+    document.getElementById('close-modal').addEventListener('click', function () {
+        document.getElementById('modal').style.display = 'none';
+    });
+
 </script>
 </body>
 </html>

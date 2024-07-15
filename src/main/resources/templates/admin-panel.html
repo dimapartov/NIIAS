@@ -97,23 +97,13 @@
         }
 
     </style>
-    <script>
-        function validateForm() {
-            const fixedCost = document.getElementById('fixedCost').value;
-            if (fixedCost === '' || parseFloat(fixedCost) <= 0) {
-                alert('Фиксированная стоимость должна быть больше 0.');
-                return false;
-            }
-            return true;
-        }
-    </script>
 </head>
 <body>
 <a href="/" class="home-button">Главная</a>
 <div class="container">
     <div class="inner-container">
         <h2>Добавление параметра</h2>
-        <form th:action="@{/admin/parameters/add}" method="post" onsubmit="return validateForm()">
+        <form th:action="@{/admin/parameters/add}" method="post">
             <div>
                 <input type="text" id="name" name="name" placeholder="Название" required>
             </div>

@@ -45,6 +45,6 @@ public class UserController {
         String subject = "Запрос на расчет стоимости проекта от: " + email;
         String body = "Поступил запрос от " + name + ". Стоимость: " + totalCost + ". Почта: " + email + ". Телефон: " + phone;
         mailSenderService.sendSimpleMail(subject, body);
-        return "redirect:/";
+        return "redirect:/user/panel";
     }
 }

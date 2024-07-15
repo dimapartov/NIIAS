@@ -39,9 +39,9 @@ public class UserController {
 
     @GetMapping("/sendMail")
     public String sendMail(@RequestParam String name,
-                         @RequestParam String phone,
-                         @RequestParam String email,
-                         @RequestParam String totalCost) {
+                           @RequestParam String phone,
+                           @RequestParam String email,
+                           @RequestParam String totalCost) {
         String subject = "Запрос на расчет стоимости проекта от: " + email;
         String body = "Поступил запрос от " + name + ". Стоимость: " + totalCost + ". Почта: " + email + ". Телефон: " + phone;
         mailSenderService.sendSimpleMail(subject, body);

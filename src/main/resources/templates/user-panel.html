@@ -119,7 +119,7 @@
         }
 
         #selected-parameters {
-            /*overflow-y: auto;*/
+            display: none;
         }
 
         #selected-parameters ul {
@@ -243,8 +243,11 @@
                 <input type="text" id="name" name="name" placeholder="Имя" required>
                 <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
                 <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required>
-                <button type="submit">РАССЧИТАТЬ</button>
+                <button type="submit" id="calculate-button" disabled>РАССЧИТАТЬ</button>
             </form>
+            <div id="parameter-list-is-empty-error">
+                <p>Выберите как минимум 1 параметр</p>
+            </div>
             <span id="total-cost-hidden" style="display:none"></span>
         </div>
     </div>
@@ -259,6 +262,9 @@
     const selectedParameters = [];
     const parameterList = document.getElementById('parameter-list');
     const totalCostElement = document.getElementById('total-cost-hidden');
+    const selectedParametersSection = document.getElementById('selected-parameters');
+    const calculateButton = document.getElementById('calculate-button');
+    const parameterListIsEmptyError = document.getElementById('parameter-list-is-empty-error')
 
     function addParameter(parameterName, fixedCost, coefficient) {
         const parameterCost = fixedCost * coefficient;
@@ -277,6 +283,8 @@
         parameterList.appendChild(listItem);
 
         updateTotalCost();
+        toggleParameterListVisibility();
+        toggleCalculateButton()
     }
 
     function deleteParameter(parameterId) {
@@ -285,12 +293,32 @@
             selectedParameters.splice(index, 1);
             parameterList.removeChild(parameterList.childNodes[index]);
             updateTotalCost();
+            toggleParameterListVisibility();
+            toggleCalculateButton()
         }
     }
 
     function updateTotalCost() {
         const total = selectedParameters.reduce((acc, param) => acc + param.parameterCost, 0);
         totalCostElement.textContent = `${total}р`;
+    }
+
+    function toggleParameterListVisibility() {
+        if (selectedParameters.length > 0) {
+            selectedParametersSection.style.display = 'block';
+        } else {
+            selectedParametersSection.style.display = 'none';
+        }
+    }
+
+    function toggleCalculateButton() {
+        if (selectedParameters.length > 0) {
+            calculateButton.removeAttribute('disabled');
+            parameterListIsEmptyError.style.display = 'none';
+        } else {
+            calculateButton.setAttribute('disabled', 'disabled');
+            parameterListIsEmptyError.style.display = 'block';
+        }
     }
 
     document.getElementById('publicForm').addEventListener('submit', function (event) {

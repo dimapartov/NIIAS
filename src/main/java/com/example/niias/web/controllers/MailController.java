@@ -1,6 +1,6 @@
 package com.example.niias.web.controllers;
 
-import com.example.niias.services.MailSenderServiceImpl;
+import com.example.niias.services.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class MailController {
 
     @Autowired
-    private MailSenderServiceImpl mailSenderService;
+    private MailSenderService mailSenderService;
 
 
     @GetMapping("/sendMail")

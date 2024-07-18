@@ -2,17 +2,16 @@ package com.example.niias.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 
 @Service
-public class MailSenderServiceImpl {
+public class MailSenderService {
 
     @Value("${spring.mail.username}")
-    private String from;
+    private String userName;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -21,8 +20,8 @@ public class MailSenderServiceImpl {
     public void sendSimpleMail(String subject, String body) {
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("mr_kubarev@mail.ru");
-        message.setFrom(from);
+        message.setTo(userName);
+        message.setFrom(userName);
         message.setSubject(subject);
         message.setText(body);
         javaMailSender.send(message);

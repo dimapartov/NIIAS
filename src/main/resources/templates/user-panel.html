@@ -46,6 +46,7 @@
             justify-content: space-between;
             width: 80%;
             max-width: 1200px;
+            min-height: 570px;
             position: relative;
         }
 
@@ -66,7 +67,8 @@
 
         .block h3 {
             text-align: center;
-            margin-bottom: 10px;
+            margin: 0;
+            padding: 0;
         }
 
         .block form {
@@ -103,8 +105,9 @@
 
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+            margin: 5px 5px 20px;
         }
 
         .header button {
@@ -178,7 +181,6 @@
         #modal-close-button:hover {
             background-color: #C00023;
         }
-
     </style>
 </head>
 <body>
@@ -190,7 +192,9 @@
     </div>
     <div class="section">
         <div class="block">
-            <h3>ВЫБОР ПАРАМЕТРОВ ДЛЯ РАСЧЕТА</h3>
+            <div class="header">
+                <h3>ВЫБОР ПАРАМЕТРОВ ДЛЯ РАСЧЕТА</h3>
+            </div>
             <form id="publicForm">
                 <label for="publicParameter">Инфраструктура общего пользования</label>
                 <select id="publicParameter" name="publicParameter" required>
@@ -243,7 +247,6 @@
             <button id="modal-close-button">Закрыть</button>
         </div>
     </div>
-
 </div>
 <script>
     const selectedParameters = [];

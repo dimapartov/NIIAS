@@ -38,7 +38,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests.requestMatchers("/", "/user/**", "/static/**", "/mail/**").permitAll().requestMatchers("/admin/**").authenticated()).formLogin(formLogin -> formLogin.loginPage("/user/login").usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).defaultSuccessUrl("/admin/parameters", true).failureUrl("/user/login?error=true"));
+        http.authorizeHttpRequests(
+                authorizeHttpRequests ->
+                        authorizeHttpRequests
+                            .requestMatchers("/", "/user/**", "/static/**", "/mail/**").permitAll()
+                            .requestMatchers("/admin/**").authenticated())
+            .formLogin(
+                    formLogin ->
+                            formLogin
+                                .loginPage("/user/login")
+                                .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                                .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
+                                .defaultSuccessUrl("/admin/parameters", true)
+                                .failureUrl("/user/login?error=true"));
         return http.build();
     }
 

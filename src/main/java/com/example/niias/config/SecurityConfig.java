@@ -1,6 +1,6 @@
 package com.example.niias.config;
 
-import com.example.niias.services.UserDetailsService;
+import com.example.niias.services.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -19,7 +19,7 @@ public class SecurityConfig {
 
     @Bean
     public org.springframework.security.core.userdetails.UserDetailsService userDetailsService() {
-        return new UserDetailsService();
+        return new MyUserDetailsService();
     }
 
     @Bean

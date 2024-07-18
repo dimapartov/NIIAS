@@ -163,6 +163,9 @@
         }
 
         #modal-content {
+            position: fixed;
+            top: 50%;
+            width: 25%;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
@@ -188,6 +191,12 @@
 </head>
 <body>
 <a href="/" class="home-button">Главная</a>
+<div id="modal-window" style="display:none;">
+    <div id="modal-content">
+        <p id="modal-message"></p>
+        <button id="modal-close-button">Закрыть</button>
+    </div>
+</div>
 <div class="main-container">
     <div class="section" id="selected-parameters">
         <div class="block">
@@ -249,12 +258,6 @@
                 <p>Выберите как минимум 1 параметр</p>
             </div>
             <span id="total-cost-hidden" style="display:none"></span>
-        </div>
-    </div>
-    <div id="modal-window" style="display:none;">
-        <div id="modal-content">
-            <p id="modal-message"></p>
-            <button id="modal-close-button">Закрыть</button>
         </div>
     </div>
 </div>
@@ -355,7 +358,7 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('modal-message').textContent = data;
-                document.getElementById('modal-window').style.display = 'block';
+                document.getElementById('modal-window').style.display = 'flex';
             })
             .catch(error => console.error('Ошибка:', error));
     });

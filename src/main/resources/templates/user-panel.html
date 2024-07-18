@@ -43,15 +43,15 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
-            justify-content: space-between;
+            justify-content: space-evenly;
             width: 80%;
             max-width: 1200px;
+            max-height: 1200px;
             min-height: 570px;
-            position: relative;
+            overflow: auto;
         }
 
         .section {
-            width: 48%;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -62,7 +62,9 @@
             background-color: #f9f9f9;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            max-height: 480px;
         }
 
         .block h3 {
@@ -116,16 +118,17 @@
             cursor: pointer;
         }
 
-        .selected-parameters {
-            margin-bottom: 20px;
+        #selected-parameters {
+            /*overflow-y: auto;*/
         }
 
-        .selected-parameters ul {
+        #selected-parameters ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
 
-        .selected-parameters ul li {
+        #selected-parameters ul li {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -133,7 +136,7 @@
             border-bottom: 1px solid #ccc;
         }
 
-        .selected-parameters ul li button {
+        #selected-parameters ul li button {
             background-color: #E4002B;
             color: white;
             border: none;
@@ -143,7 +146,7 @@
             transition: background-color 0.3s ease;
         }
 
-        .selected-parameters ul li button:hover {
+        #selected-parameters ul li button:hover {
             background-color: #C00023;
         }
 
@@ -186,9 +189,13 @@
 <body>
 <a href="/" class="home-button">Главная</a>
 <div class="main-container">
-    <div class="selected-parameters" id="selected-parameters">
-        <h3>Выбранные параметры</h3>
-        <ul id="parameter-list"></ul>
+    <div class="section" id="selected-parameters">
+        <div class="block">
+            <div class="header">
+                <h3>ВЫБРАННЫЕ ПАРАМЕТРЫ</h3>
+            </div>
+            <ul id="parameter-list"></ul>
+        </div>
     </div>
     <div class="section">
         <div class="block">

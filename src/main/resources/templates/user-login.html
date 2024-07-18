@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<!--<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">-->
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
@@ -104,7 +105,7 @@
                                placeholder="Пароль"/>
                     </div>
                     <div th:if="${param.error}">
-                        <p>Invalid username or password.</p>
+                        <p>Неверный логин или пароль</p>
                     </div>
                     <button type="submit" class="btn">Вход</button>
                 </form>

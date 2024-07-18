@@ -1,6 +1,5 @@
 package com.example.niias.util;
 
-
 import com.example.niias.models.User;
 import com.example.niias.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,12 @@ public class DataInit implements CommandLineRunner {
     @Autowired
     UserService userService;
 
+
     @Override
     public void run(String... args) {
         seedData();
     }
+
 
     private void seedData() {
         if (!userService.existsByUsername("admin")) {
@@ -27,4 +28,5 @@ public class DataInit implements CommandLineRunner {
             System.out.println("User 'admin' already exists.");
         }
     }
+
 }

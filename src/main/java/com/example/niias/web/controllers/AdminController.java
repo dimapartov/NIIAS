@@ -1,6 +1,5 @@
 package com.example.niias.web.controllers;
 
-
 import com.example.niias.models.Parameter;
 import com.example.niias.services.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ public class AdminController {
 
     @Autowired
     private ParameterService parameterService;
+
 
     @GetMapping("/parameters")
     public String getParametersPage(Model model) {
@@ -33,4 +33,5 @@ public class AdminController {
         parameterService.deleteParameter(id);
         return "redirect:/admin/parameters";
     }
+
 }

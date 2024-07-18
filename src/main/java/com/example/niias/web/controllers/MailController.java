@@ -1,5 +1,4 @@
-package com.example.niias.controllers;
-
+package com.example.niias.web.controllers;
 
 import com.example.niias.services.MailSenderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ public class MailController {
 
     @Autowired
     private MailSenderServiceImpl mailSenderService;
+
 
     @GetMapping("/sendMail")
     public @ResponseBody String sendMail(@RequestParam String name,
@@ -28,4 +28,5 @@ public class MailController {
 
         return "Запрос успешно отправлен. Итоговая стоимость: " + totalCost;
     }
+
 }

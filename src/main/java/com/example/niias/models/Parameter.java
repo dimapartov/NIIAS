@@ -1,6 +1,5 @@
 package com.example.niias.models;
 
-
 import jakarta.persistence.*;
 
 
@@ -61,4 +60,5 @@ public class Parameter {
     public void setCostType(String costType) {
         this.costType = costType;
     }
+
 }

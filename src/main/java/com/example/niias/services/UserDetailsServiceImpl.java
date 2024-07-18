@@ -1,6 +1,5 @@
 package com.example.niias.services;
 
-
 import com.example.niias.models.User;
 import com.example.niias.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +23,5 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
         return user.map(com.example.niias.config.UserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
     }
+
 }

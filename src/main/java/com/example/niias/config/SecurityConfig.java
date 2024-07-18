@@ -1,6 +1,5 @@
 package com.example.niias.config;
 
-
 import com.example.niias.services.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,20 +38,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-                        authorizeHttpRequests -> authorizeHttpRequests
-                                .requestMatchers("/", "/user/**", "/static/**", "/mail/**").permitAll()
-                                .requestMatchers("/admin/**").authenticated())
-                .formLogin(
-                        formLogin -> formLogin
-                                .loginPage("/user/login")
-                                .usernameParameter(
-                                        UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-                                .passwordParameter(
-                                        UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
-                                .defaultSuccessUrl("/admin/parameters", true)
-                                .failureUrl("/user/login?error=true") // Redirect to login page with error parameter
-                );
+        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests.requestMatchers("/", "/user/**", "/static/**", "/mail/**").permitAll().requestMatchers("/admin/**").authenticated()).formLogin(formLogin -> formLogin.loginPage("/user/login").usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).defaultSuccessUrl("/admin/parameters", true).failureUrl("/user/login?error=true"));
         return http.build();
     }
 

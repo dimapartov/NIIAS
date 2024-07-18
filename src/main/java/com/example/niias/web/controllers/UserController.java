@@ -1,6 +1,5 @@
 package com.example.niias.web.controllers;
 
-
 import com.example.niias.services.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,4 +30,5 @@ public class UserController {
         model.addAttribute("parametersUncommonType", parameterService.getParametersByType("uncommon"));
         return "user-panel";
     }
+
 }

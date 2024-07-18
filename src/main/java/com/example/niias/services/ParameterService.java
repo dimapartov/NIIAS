@@ -1,6 +1,5 @@
 package com.example.niias.services;
 
-
 import com.example.niias.models.Parameter;
 import com.example.niias.repositories.ParameterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ public class ParameterService {
 
     @Autowired
     private ParameterRepository parameterRepository;
+
 
     public List<Parameter> getAllParameters() {
         return parameterRepository.findAll();
@@ -35,4 +35,5 @@ public class ParameterService {
     public List<Parameter> getParametersByType(String type) {
         return parameterRepository.findAllByTypeEquals(type);
     }
+
 }

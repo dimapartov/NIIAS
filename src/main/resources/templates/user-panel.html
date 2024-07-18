@@ -196,7 +196,9 @@
                 <select id="publicParameter" name="publicParameter" required>
                     <option value="" disabled selected>Параметр</option>
                     <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}"
-                            th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр
+                            th:text="${parameter.name}"
+                            th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
+                        Параметр
                     </option>
                 </select>
                 <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient"
@@ -210,7 +212,9 @@
                 <select id="privateParameter" name="privateParameter" required>
                     <option value="" disabled selected>Параметр</option>
                     <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}"
-                            th:text="${parameter.name}" th:attr="data-fixedCost=${parameter.fixedCost}">Параметр
+                            th:text="${parameter.name}"
+                            th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
+                        Параметр
                     </option>
                 </select>
                 <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient"
@@ -287,6 +291,7 @@
         const fixedCost = Number(selectedOption.getAttribute('data-fixedcost'));
         const coefficient = Number(document.getElementById('publicCoefficient').value) || 1;
         addParameter(parameterName, fixedCost, coefficient);
+        document.getElementById('publicCoefficient').value = ''; // Reset coefficient field
     });
 
     document.getElementById('privateForm').addEventListener('submit', function (event) {
@@ -297,6 +302,7 @@
         const fixedCost = Number(selectedOption.getAttribute('data-fixedcost'));
         const coefficient = Number(document.getElementById('privateCoefficient').value) || 1;
         addParameter(parameterName, fixedCost, coefficient);
+        document.getElementById('privateCoefficient').value = ''; // Reset coefficient field
     });
 
     document.getElementById('contactForm').addEventListener('submit', function (event) {
@@ -320,6 +326,22 @@
         document.getElementById('modal').style.display = 'none';
     });
 
+    document.getElementById('publicParameter').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const costType = selectedOption.getAttribute('data-costtype');
+        const coefficientField = document.getElementById('publicCoefficient');
+        coefficientField.style.display = costType === 'fixed' ? 'none' : 'block';
+        coefficientField.value = ''; // Reset coefficient field when parameter changes
+    });
+
+    document.getElementById('privateParameter').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const costType = selectedOption.getAttribute('data-costtype');
+        const coefficientField = document.getElementById('privateCoefficient');
+        coefficientField.style.display = costType === 'fixed' ? 'none' : 'block';
+        coefficientField.value = ''; // Reset coefficient field when parameter changes
+    });
 </script>
+
 </body>
 </html>

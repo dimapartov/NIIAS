@@ -37,7 +37,7 @@
             background-color: #C00023;
         }
 
-        .container {
+        .main-container {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
@@ -144,7 +144,7 @@
             background-color: #C00023;
         }
 
-        #modal {
+        #modal-window {
             position: fixed;
             top: 0;
             left: 0;
@@ -163,7 +163,7 @@
             text-align: center;
         }
 
-        #close-modal {
+        #modal-close-button {
             background-color: #E4002B;
             color: white;
             padding: 10px 20px;
@@ -175,7 +175,7 @@
             transition: background-color 0.3s ease;
         }
 
-        #close-modal:hover {
+        #modal-close-button:hover {
             background-color: #C00023;
         }
 
@@ -183,7 +183,7 @@
 </head>
 <body>
 <a href="/" class="home-button">Главная</a>
-<div class="container">
+<div class="main-container">
     <div class="selected-parameters" id="selected-parameters">
         <h3>Выбранные параметры</h3>
         <ul id="parameter-list"></ul>
@@ -237,10 +237,10 @@
             <span id="total-cost-hidden" style="display:none"></span>
         </div>
     </div>
-    <div id="modal" style="display:none;">
+    <div id="modal-window" style="display:none;">
         <div id="modal-content">
             <p id="modal-message"></p>
-            <button id="close-modal">Закрыть</button>
+            <button id="modal-close-button">Закрыть</button>
         </div>
     </div>
 
@@ -317,13 +317,13 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('modal-message').textContent = data;
-                document.getElementById('modal').style.display = 'block';
+                document.getElementById('modal-window').style.display = 'block';
             })
             .catch(error => console.error('Ошибка:', error));
     });
 
-    document.getElementById('close-modal').addEventListener('click', function () {
-        document.getElementById('modal').style.display = 'none';
+    document.getElementById('modal-close-button').addEventListener('click', function () {
+        document.getElementById('modal-window').style.display = 'none';
     });
 
     document.getElementById('publicParameter').addEventListener('change', function () {

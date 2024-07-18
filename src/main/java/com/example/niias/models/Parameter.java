@@ -12,6 +12,7 @@ public class Parameter {
     private String name;
     private String type;
     private Double fixedCost;
+    private String costType;
 
 
     @Id
@@ -35,6 +36,11 @@ public class Parameter {
         return fixedCost;
     }
 
+    @Column(name = "costType")
+    public String getCostType() {
+        return costType;
+    }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -50,5 +56,9 @@ public class Parameter {
 
     public void setFixedCost(Double fixedCost) {
         this.fixedCost = fixedCost;
+    }
+
+    public void setCostType(String costType) {
+        this.costType = costType;
     }
 }

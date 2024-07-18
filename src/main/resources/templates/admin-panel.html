@@ -18,7 +18,7 @@
         }
 
         .container {
-            background-color: #D3D3D3;
+            background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
         }
 
         .inner-container {
-            background-color: white;
+            background-color: #f9f9f9;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -109,9 +109,16 @@
             </div>
             <div>
                 <select id="type" name="type" required>
-                    <option value="" disabled selected>Выберите тип</option>
+                    <option value="" disabled selected>Выберите тип инфраструктуры</option>
                     <option value="common">Инфраструктура общего пользования</option>
                     <option value="uncommon">Инфраструктура необщего пользования</option>
+                </select>
+            </div>
+            <div>
+                <select id="costType" name="costType" required>
+                    <option value="" disabled selected>Выберите тип стоимости</option>
+                    <option value="fixed">Фиксированная</option>
+                    <option value="unfixed">Не фиксированная</option>
                 </select>
             </div>
             <div>

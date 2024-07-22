@@ -187,6 +187,56 @@
         #modal-close-button:hover {
             background-color: #C00023;
         }
+           .block {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            max-height: 480px;
+        }
+
+        .block h3 {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .block form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .block label {
+            margin-bottom: 5px;
+        }
+
+        .block input,
+        .block select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .block button {
+            background-color: #E4002B;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .block button:hover {
+            background-color: #C00023;
+        }
+
+        #publicWindow, #privateWindow {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -209,38 +259,45 @@
     <div class="section">
         <div class="block">
             <div class="header">
-                <h3>ВЫБОР ПАРАМЕТРОВ ДЛЯ РАСЧЕТА</h3>
+                <button id="togglePublicWindow">Показать Инфраструктуру общего пользования</button>
             </div>
-            <form id="publicForm">
-                <label for="publicParameter">Инфраструктура общего пользования</label>
-                <select id="publicParameter" name="publicParameter" required>
-                    <option value="" disabled selected>Параметр</option>
-                    <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}"
-                            th:text="${parameter.name}"
-                            th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
-                        Параметр
-                    </option>
-                </select>
-                <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient"
-                       placeholder="Коэффициент">
-                <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
-            </form>
+            <div id="publicWindow">
+                <form id="publicForm">
+                    <label for="publicParameter">Инфраструктура общего пользования</label>
+                    <select id="publicParameter" name="publicParameter" required>
+                        <option value="" disabled selected>Параметр</option>
+                        <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}"
+                                th:text="${parameter.name}"
+                                th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
+                            Параметр
+                        </option>
+                    </select>
+                    <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient"
+                           placeholder="Коэффициент">
+                    <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
+                </form>
+            </div>
         </div>
         <div class="block">
-            <form id="privateForm">
-                <label for="privateParameter">Инфраструктура необщего пользования</label>
-                <select id="privateParameter" name="privateParameter" required>
-                    <option value="" disabled selected>Параметр</option>
-                    <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}"
-                            th:text="${parameter.name}"
-                            th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
-                        Параметр
-                    </option>
-                </select>
-                <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient"
-                       placeholder="Коэффициент">
-                <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
-            </form>
+            <div class="header">
+                <button id="togglePrivateWindow">Показать Инфраструктуру не общего пользования</button>
+            </div>
+            <div id="privateWindow">
+                <form id="privateForm">
+                    <label for="privateParameter">Инфраструктура необщего пользования</label>
+                    <select id="privateParameter" name="privateParameter" required>
+                        <option value="" disabled selected>Параметр</option>
+                        <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}"
+                                th:text="${parameter.name}"
+                                th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
+                            Параметр
+                        </option>
+                    </select>
+                    <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient"
+                           placeholder="Коэффициент">
+                    <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="section">
@@ -250,7 +307,7 @@
             </div>
             <form id="contactForm" action="/mail/sendMail" method="get">
                 <input type="text" id="name" name="name" placeholder="Имя" required>
-                <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
+                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___ __ __" required>
                 <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required>
                 <button type="submit" id="calculate-button" disabled>РАССЧИТАТЬ</button>
             </form>
@@ -267,7 +324,7 @@
     const totalCostElement = document.getElementById('total-cost-hidden');
     const selectedParametersSection = document.getElementById('selected-parameters');
     const calculateButton = document.getElementById('calculate-button');
-    const parameterListIsEmptyError = document.getElementById('parameter-list-is-empty-error')
+    const parameterListIsEmptyError = document.getElementById('parameter-list-is-empty-error');
 
     function addParameter(parameterName, fixedCost, coefficient) {
         const parameterCost = fixedCost * coefficient;
@@ -287,7 +344,7 @@
 
         updateTotalCost();
         toggleParameterListVisibility();
-        toggleCalculateButton()
+        toggleCalculateButton();
     }
 
     function deleteParameter(parameterId) {
@@ -297,7 +354,7 @@
             parameterList.removeChild(parameterList.childNodes[index]);
             updateTotalCost();
             toggleParameterListVisibility();
-            toggleCalculateButton()
+            toggleCalculateButton();
         }
     }
 
@@ -381,6 +438,53 @@
         const coefficientField = document.getElementById('privateCoefficient');
         coefficientField.style.display = costType === 'fixed' ? 'none' : 'block';
         coefficientField.value = ''; // Reset coefficient field when parameter changes
+    });
+
+    document.getElementById('togglePublicWindow').addEventListener('click', function () {
+        const publicWindow = document.getElementById('publicWindow');
+        publicWindow.style.display = publicWindow.style.display === 'none' ? 'block' : 'none';
+        this.textContent = publicWindow.style.display === 'none' ? 'Показать Инфраструктуру общего пользования' : 'Скрыть Инфраструктуру общего пользования';
+    });
+
+    document.getElementById('togglePrivateWindow').addEventListener('click', function () {
+        const privateWindow = document.getElementById('privateWindow');
+        privateWindow.style.display = privateWindow.style.display === 'none' ? 'block' : 'none';
+        this.textContent = privateWindow.style.display === 'none' ? 'Показать Инфраструктуру не общего пользования' : 'Скрыть Инфраструктуру не общего пользования';
+    });
+
+     document.addEventListener('DOMContentLoaded', function() {
+        const phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', function(event) {
+            let input = event.target.value.replace(/\D/g, '');
+
+            if (input.startsWith('7')) {
+                input = input.slice(1);
+            }
+
+            if (input.length > 10) {
+                input = input.slice(0, 10);
+            }
+
+            const formattedInput = formatPhoneNumber(input);
+            event.target.value = formattedInput;
+        });
+
+        function formatPhoneNumber(number) {
+            if (number.length === 0) {
+                return '+7';
+            }
+            if (number.length <= 3) {
+                return `+7 ${number}`;
+            }
+            if (number.length <= 6) {
+                return `+7 ${number.slice(0, 3)} ${number.slice(3)}`;
+            }
+            if (number.length <= 8) {
+                return `+7 ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6)}`;
+            }
+            return `+7 ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8)}`;
+        }
     });
 </script>
 </body>

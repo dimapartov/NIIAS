@@ -38,7 +38,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
+        http
+            .authorizeHttpRequests(
                 authorizeHttpRequests ->
                         authorizeHttpRequests
                             .requestMatchers("/", "/user/**", "/static/**", "/mail/**").permitAll()

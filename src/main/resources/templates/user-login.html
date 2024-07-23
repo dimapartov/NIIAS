@@ -81,36 +81,29 @@
         }
     </style>
 </head>
+<body>
 <a href="/" class="home-button">Главная</a>
-<body class="d-flex flex-column h-100">
-<main class="flex-shrink-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="login-container text-center col-md-8 align-self-center">
-                <h1>Вход в учетную запись</h1>
-                <form th:action="@{/user/login}" th:method="post">
-                    <div class="mb-3">
-                        <input id="username"
-                               name="username"
-                               th:value="${userName}"
-                               type="text" class="form-control"
-                               placeholder="Имя пользователя или E-mail"/>
-                    </div>
-                    <div class="mb-3">
-                        <input id="password"
-                               name="password"
-                               type="password" class="form-control"
-                               placeholder="Пароль"/>
-                    </div>
-                    <div th:if="${param.error}">
-                        <p>Неверный логин или пароль</p>
-                    </div>
-                    <button type="submit" class="btn">Вход</button>
-                </form>
-            </div>
+<div class="login-container">
+    <h1>Вход в учетную запись</h1>
+    <form th:action="@{/user/login}" th:method="post">
+        <div class="mb-3">
+            <input id="username"
+                   name="username"
+                   th:value="${userName}"
+                   type="text" class="form-control"
+                   placeholder="Имя пользователя или E-mail"/>
         </div>
-    </div>
-</main>
+        <div class="mb-3">
+            <input id="password"
+                   name="password"
+                   type="password" class="form-control"
+                   placeholder="Пароль"/>
+        </div>
+        <div th:if="${param.error}">
+            <p>Неверный логин или пароль</p>
+        </div>
+        <button type="submit" class="btn">Вход</button>
+    </form>
+</div>
 </body>
 </html>

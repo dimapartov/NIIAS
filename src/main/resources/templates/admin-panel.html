@@ -276,8 +276,8 @@
             <div>
                 <select id="type" name="type" required>
                     <option value="" disabled selected>Выберите тип инфраструктуры</option>
-                    <option value="Общего пользования">Инфраструктура общего пользования</option>
-                    <option value="Необщего пользования">Инфраструктура необщего пользования</option>
+                    <option value="Инфраструктура общего пользования">Инфраструктура общего пользования</option>
+                    <option value="Инфраструктура необщего пользования">Инфраструктура необщего пользования</option>
                 </select>
             </div>
             <div>
@@ -313,7 +313,7 @@
             <ul>
                 <li th:each="parameter, iterStat : ${parameters}">
                     <span th:text="${iterStat.count} + ' ' + ${parameter.name}"></span><br>
-                    <span th:text="'Тип стоимости: ' + ${parameter.costType} + ', Цена: ' + ${parameter.fixedCost}"></span><br>
+                    <span th:text="'Тип стоимости: ' + ${parameter.costType} + ', Стоимость: ' + ${parameter.fixedCost}"></span><br>
                     <span th:text="'Тип инфраструктуры: ' + ${parameter.type}"></span>
                 </li>
             </ul>

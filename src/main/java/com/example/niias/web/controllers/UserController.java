@@ -26,8 +26,8 @@ public class UserController {
 
     @GetMapping("/panel")
     public String getUserPanelPage(Model model) {
-        model.addAttribute("parametersCommonType", parameterService.getParametersByType("common"));
-        model.addAttribute("parametersUncommonType", parameterService.getParametersByType("uncommon"));
+        model.addAttribute("parametersCommonType", parameterService.getParametersByType("Инфраструктура общего пользования"));
+        model.addAttribute("parametersUncommonType", parameterService.getParametersByType("Инфраструктура необщего пользования"));
         return "user-panel";
     }
 

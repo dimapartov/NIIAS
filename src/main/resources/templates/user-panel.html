@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Расчет стоимости</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("/static/images/fon.jpg");
+            background-attachment: fixed;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #E4002B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-button:hover {
+            background-color: #C00023;
+        }
+
+        .main-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-evenly;
+            width: 80%;
+            max-width: 1200px;
+            max-height: 1200px;
+            min-height: 570px;
+            overflow: auto;
+        }
+
+        .section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 10px;
+        }
+
+        .block {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            max-height: 480px;
+        }
+
+        .block h3 {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .block form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .block label {
+            margin-bottom: 5px;
+        }
+
+        .block input,
+        .block select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .block button {
+            background-color: #E4002B;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .block button:hover {
+            background-color: #C00023;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px 5px 20px;
+        }
+
+        .header button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        #selected-parameters {
+            display: none;
+        }
+
+        #selected-parameters ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #selected-parameters ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #selected-parameters ul li button {
+            background-color: #E4002B;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #selected-parameters ul li button:hover {
+            background-color: #C00023;
+        }
+
+        #modal-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-content {
+            position: fixed;
+            top: 50%;
+            width: 25%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #modal-close-button {
+            background-color: #E4002B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #modal-close-button:hover {
+            background-color: #C00023;
+        }
+
+        .block {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+            max-height: 480px;
+        }
+
+        .block h3 {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .block form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .block label {
+            margin-bottom: 5px;
+        }
+
+        .block input,
+        .block select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .block button {
+            background-color: #E4002B;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .block button:hover {
+            background-color: #C00023;
+        }
+
+        #publicWindow, #privateWindow {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<a href="/" class="home-button">Главная</a>
+<div id="modal-window" style="display:none;">
+    <div id="modal-content">
+        <p id="modal-message"></p>
+        <button id="modal-close-button">Закрыть</button>
+    </div>
+</div>
+<div class="main-container">
+    <div class="section" id="selected-parameters">
+        <div class="block">
+            <div class="header">
+                <h3>ВЫБРАННЫЕ ПАРАМЕТРЫ</h3>
+            </div>
+            <ul id="parameter-list"></ul>
+        </div>
+    </div>
+    <div class="section">
+        <div class="block">
+            <div class="header">
+                <button id="togglePublicWindow">Показать Инфраструктуру общего пользования</button>
+            </div>
+            <div id="publicWindow">
+                <form id="publicForm">
+                    <label for="publicParameter">Инфраструктура общего пользования</label>
+                    <select id="publicParameter" name="publicParameter" required>
+                        <option value="" disabled selected>Параметр</option>
+                        <option th:each="parameter : ${parametersCommonType}" th:value="${parameter.id}"
+                                th:text="${parameter.name}"
+                                th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
+                        </option>
+                    </select>
+                    <input type="number" step="0.01" id="publicCoefficient" name="publicCoefficient"
+                           placeholder="Коэффициент">
+                    <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
+                </form>
+            </div>
+        </div>
+        <div class="block">
+            <div class="header">
+                <button id="togglePrivateWindow">Показать Инфраструктуру не общего пользования</button>
+            </div>
+            <div id="privateWindow">
+                <form id="privateForm">
+                    <label for="privateParameter">Инфраструктура необщего пользования</label>
+                    <select id="privateParameter" name="privateParameter" required>
+                        <option value="" disabled selected>Параметр</option>
+                        <option th:each="parameter : ${parametersUncommonType}" th:value="${parameter.id}"
+                                th:text="${parameter.name}"
+                                th:attr="data-fixedCost=${parameter.fixedCost}, data-costType=${parameter.costType}">
+                        </option>
+                    </select>
+                    <input type="number" step="0.01" id="privateCoefficient" name="privateCoefficient"
+                           placeholder="Коэффициент">
+                    <button type="submit">ДОБАВИТЬ ПАРАМЕТР</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="block">
+            <div class="header">
+                <h3>КОНТАКТНАЯ ИНФОРМАЦИЯ</h3>
+            </div>
+            <form id="contactForm" action="/mail/sendMail" method="get">
+                <input type="text" id="name" name="name" placeholder="Имя" required>
+                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___ __ __" required>
+                <input type="email" id="email" name="email" placeholder="Адрес электронной почты" required>
+                <button type="submit" id="calculate-button" disabled>РАССЧИТАТЬ</button>
+            </form>
+            <div id="parameter-list-is-empty-error">
+                <p>Выберите как минимум 1 параметр</p>
+            </div>
+            <span id="total-cost-hidden" style="display:none"></span>
+        </div>
+    </div>
+</div>
+<script>
+    const selectedParameters = [];
+    const parameterList = document.getElementById('parameter-list');
+    const totalCostElement = document.getElementById('total-cost-hidden');
+    const selectedParametersSection = document.getElementById('selected-parameters');
+    const calculateButton = document.getElementById('calculate-button');
+    const parameterListIsEmptyError = document.getElementById('parameter-list-is-empty-error');
+
+    function addParameter(parameterName, fixedCost, coefficient) {
+        const parameterCost = fixedCost * coefficient;
+        const parameterId = Date.now();
+        selectedParameters.push({parameterId, parameterName, parameterCost: parameterCost});
+
+        const listItem = document.createElement('li');
+        listItem.textContent = `${parameterName} - ${coefficient}шт`;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Удалить';
+        deleteButton.style.marginLeft = '10px';
+        deleteButton.onclick = () => deleteParameter(parameterId);
+
+        listItem.appendChild(deleteButton);
+        parameterList.appendChild(listItem);
+
+        updateTotalCost();
+        toggleParameterListVisibility();
+        toggleCalculateButton();
+    }
+
+    function deleteParameter(parameterId) {
+        const index = selectedParameters.findIndex(param => param.parameterId === parameterId);
+        if (index !== -1) {
+            selectedParameters.splice(index, 1);
+            parameterList.removeChild(parameterList.childNodes[index]);
+            updateTotalCost();
+            toggleParameterListVisibility();
+            toggleCalculateButton();
+        }
+    }
+
+    function updateTotalCost() {
+        const total = selectedParameters.reduce((acc, param) => acc + param.parameterCost, 0);
+        totalCostElement.textContent = `${total}р`;
+    }
+
+    function toggleParameterListVisibility() {
+        if (selectedParameters.length > 0) {
+            selectedParametersSection.style.display = 'block';
+        } else {
+            selectedParametersSection.style.display = 'none';
+        }
+    }
+
+    function toggleCalculateButton() {
+        if (selectedParameters.length > 0) {
+            calculateButton.removeAttribute('disabled');
+            parameterListIsEmptyError.style.display = 'none';
+        } else {
+            calculateButton.setAttribute('disabled', 'disabled');
+            parameterListIsEmptyError.style.display = 'block';
+        }
+    }
+
+    document.getElementById('publicForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const selectElement = document.getElementById('publicParameter');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const parameterName = selectedOption.text;
+        const fixedCost = Number(selectedOption.getAttribute('data-fixedCost'));
+        const coefficient = Number(document.getElementById('publicCoefficient').value) || 1;
+        addParameter(parameterName, fixedCost, coefficient);
+        document.getElementById('publicCoefficient').value = ''; // Reset coefficient field
+    });
+
+    document.getElementById('privateForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const selectElement = document.getElementById('privateParameter');
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const parameterName = selectedOption.text;
+        const fixedCost = Number(selectedOption.getAttribute('data-fixedCost'));
+        const coefficient = Number(document.getElementById('privateCoefficient').value) || 1;
+        addParameter(parameterName, fixedCost, coefficient);
+        document.getElementById('privateCoefficient').value = ''; // Reset coefficient field
+    });
+
+    document.getElementById('contactForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const totalCost = totalCostElement.textContent;
+
+        fetch(`/mail/sendMail?name=${name}&phone=${phone}&email=${email}&totalCost=${totalCost}`)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('modal-message').textContent = data;
+                document.getElementById('modal-window').style.display = 'flex';
+            })
+            .catch(error => console.error('Ошибка:', error));
+    });
+
+    document.getElementById('modal-close-button').addEventListener('click', function () {
+        document.getElementById('modal-window').style.display = 'none';
+    });
+
+    document.getElementById('publicParameter').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const costType = selectedOption.getAttribute('data-costType');
+        const coefficientField = document.getElementById('publicCoefficient');
+        coefficientField.style.display = costType === 'Фиксированная' ? 'none' : 'block';
+        coefficientField.value = ''; // Reset coefficient field when parameter changes
+    });
+
+    document.getElementById('privateParameter').addEventListener('change', function () {
+        const selectedOption = this.options[this.selectedIndex];
+        const costType = selectedOption.getAttribute('data-costType');
+        const coefficientField = document.getElementById('privateCoefficient');
+        coefficientField.style.display = costType === 'Фиксированная' ? 'none' : 'block';
+        coefficientField.value = ''; // Reset coefficient field when parameter changes
+    });
+
+    document.getElementById('togglePublicWindow').addEventListener('click', function () {
+        const publicWindow = document.getElementById('publicWindow');
+        publicWindow.style.display = publicWindow.style.display === 'none' ? 'block' : 'none';
+        this.textContent = publicWindow.style.display === 'none' ? 'Показать Инфраструктуру общего пользования' : 'Скрыть Инфраструктуру общего пользования';
+    });
+
+    document.getElementById('togglePrivateWindow').addEventListener('click', function () {
+        const privateWindow = document.getElementById('privateWindow');
+        privateWindow.style.display = privateWindow.style.display === 'none' ? 'block' : 'none';
+        this.textContent = privateWindow.style.display === 'none' ? 'Показать Инфраструктуру не общего пользования' : 'Скрыть Инфраструктуру не общего пользования';
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', function (event) {
+            let input = event.target.value.replace(/\D/g, '');
+
+            if (input.startsWith('7')) {
+                input = input.slice(1);
+            }
+
+            if (input.length > 10) {
+                input = input.slice(0, 10);
+            }
+
+            const formattedInput = formatPhoneNumber(input);
+            event.target.value = formattedInput;
+        });
+
+        function formatPhoneNumber(number) {
+            if (number.length === 0) {
+                return '+7';
+            }
+            if (number.length <= 3) {
+                return `+7 ${number}`;
+            }
+            if (number.length <= 6) {
+                return `+7 ${number.slice(0, 3)} ${number.slice(3)}`;
+            }
+            if (number.length <= 8) {
+                return `+7 ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6)}`;
+            }
+            return `+7 ${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 8)} ${number.slice(8)}`;
+        }
+    });
+</script>
+</body>
+</html>

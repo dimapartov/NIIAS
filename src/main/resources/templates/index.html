@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("/static/images/fon.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main-title-container {
+            background-color: white;
+            border: 3px solid black;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .main-title {
+            font-size: 50px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .main-title .main-title-red-text {
+            color: #E4002B;
+        }
+
+        .main-title .main-title-black-text {
+            color: #000000;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button-container a {
+            text-decoration: none;
+            margin: 10px 0;
+        }
+
+        .button {
+            background-color: #e4002b;
+            color: #ffffff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 400px;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #cc0025;
+        }
+    </style>
+</head>
+<body>
+<div class="main-title-container">
+    <div class="main-title">
+        <span class="main-title-red-text">КАЛЬКУЛЯТОР <br>СТОИМОСТИ</span> <span class="main-title-black-text">ПРОЕКТА</span>
+    </div>
+</div>
+<div class="button-container">
+    <a href="/user/panel">
+        <button class="button">РАССЧИТАТЬ</button>
+    </a>
+    <a href="/user/login">
+        <button class="button">ПАНЕЛЬ АДМИНИСТРАТОРА</button>
+    </a>
+</div>
+</body>
+</html>

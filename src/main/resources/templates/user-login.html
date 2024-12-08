@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            background-image: url("/static/images/fon.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .login-container .form-control {
+            border: 1px solid #cccccc;
+            border-radius: 3px;
+            padding: 10px;
+            font-size: 16px;
+            width: calc(100% - 22px);
+            margin: 10px 0;
+        }
+
+        .login-container .form-control:focus {
+            border-color: #999999;
+        }
+
+        .login-container .btn {
+            background-color: #e4002b;
+            color: #ffffff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .login-container .btn:hover {
+            background-color: #cc0025;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #E4002B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+<a href="/" class="home-button">Главная</a>
+<div class="login-container">
+    <h1>Вход в учетную запись</h1>
+    <form th:action="@{/user/login}" th:method="post">
+        <div class="mb-3">
+            <input id="username"
+                   name="username"
+                   th:value="${userName}"
+                   type="text" class="form-control"
+                   placeholder="Имя пользователя или E-mail"/>
+        </div>
+        <div class="mb-3">
+            <input id="password"
+                   name="password"
+                   type="password" class="form-control"
+                   placeholder="Пароль"/>
+        </div>
+        <div th:if="${param.error}">
+            <p>Неверный логин или пароль</p>
+        </div>
+        <button type="submit" class="btn">Вход</button>
+    </form>
+</div>
+</body>
+</html>

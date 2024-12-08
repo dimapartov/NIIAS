@@ -1,0 +1,324 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Панель администратора</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            margin: 0;-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            align-items: center;-->
+<!--            height: 100vh;-->
+<!--            background-size: cover;-->
+<!--            background-position: center;-->
+<!--            background-repeat: no-repeat;-->
+<!--            background-image: url("/static/images/fon.jpg");-->
+<!--            background-attachment: fixed;-->
+<!--        }-->
+
+<!--        .main-container {-->
+<!--            background-color: white;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);-->
+<!--            display: flex;-->
+<!--            justify-content: space-evenly;-->
+<!--            width: 80%;-->
+<!--            max-width: 900px;-->
+<!--            height: 570px;-->
+<!--        }-->
+
+<!--        .inner-container {-->
+<!--            background-color: #f9f9f9;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);-->
+<!--            width: 35%;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        .inner-container h2 {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        .inner-container form {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 10px;-->
+<!--        }-->
+
+<!--        .inner-container form div {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+
+<!--        .inner-container form button {-->
+<!--            background-color: #E4002B;-->
+<!--            color: white;-->
+<!--            padding: 10px;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            transition: background-color 0.3s ease;-->
+<!--        }-->
+
+<!--        .inner-container form button:hover {-->
+<!--            background-color: #C00023;-->
+<!--        }-->
+
+<!--        .inner-container form label {-->
+<!--            margin-bottom: 5px;-->
+<!--        }-->
+
+<!--        .inner-container form input,-->
+<!--        .inner-container form select {-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 5px;-->
+<!--        }-->
+
+<!--        .home-button {-->
+<!--            position: fixed;-->
+<!--            top: 10px;-->
+<!--            left: 10px;-->
+<!--            background-color: #E4002B;-->
+<!--            color: white;-->
+<!--            padding: 10px 20px;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            cursor: pointer;-->
+<!--            text-decoration: none;-->
+<!--            font-size: 16px;-->
+<!--            transition: background-color 0.3s ease;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<a href="/" class="home-button">Главная</a>-->
+<!--<div class="main-container">-->
+<!--    <div class="inner-container">-->
+<!--        <h2>Добавление параметра</h2>-->
+<!--        <form th:action="@{/admin/parameters/add}" method="post">-->
+<!--            <div>-->
+<!--                <input type="text" id="name" name="name" placeholder="Название" required>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <select id="type" name="type" required>-->
+<!--                    <option value="" disabled selected>Выберите тип инфраструктуры</option>-->
+<!--                    <option value="common">Инфраструктура общего пользования</option>-->
+<!--                    <option value="uncommon">Инфраструктура необщего пользования</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <select id="costType" name="costType" required>-->
+<!--                    <option value="" disabled selected>Выберите тип стоимости</option>-->
+<!--                    <option value="fixed">Фиксированная</option>-->
+<!--                    <option value="unfixed">Не фиксированная</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <input type="number" step="0.01" id="fixedCost" name="fixedCost" placeholder="Фиксированная стоимость"-->
+<!--                       required min="0.01">-->
+<!--            </div>-->
+<!--            <button type="submit">Добавить параметр</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div class="inner-container">-->
+<!--        <h2>Удаление параметра</h2>-->
+<!--        <form th:action="@{/admin/parameters/delete}" method="post">-->
+<!--            <div>-->
+<!--                <select id="id" name="id" required>-->
+<!--                    <option value="" disabled selected>Параметр</option>-->
+<!--                    <option th:each="parameter : ${parameters}"-->
+<!--                            th:value="${parameter.id}"-->
+<!--                            th:text="${parameter.name}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <button type="submit">Удалить параметр</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-image: url("/static/images/fon.jpg");
+            background-attachment: fixed;
+        }
+
+        .main-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-evenly;
+            width: 80%;
+            max-width: 900px;
+            height: 600px;
+        }
+
+        .inner-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 8px rgba(0, 0, 0, 0.1);
+            width: 35%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inner-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .inner-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .inner-container form div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inner-container form button {
+            background-color: #E4002B;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .inner-container form button:hover {
+            background-color: #C00023;
+        }
+
+        .inner-container form label {
+            margin-bottom: 5px;
+        }
+
+        .inner-container form input,
+        .inner-container form select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #E4002B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .parameter-list {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .parameter-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .parameter-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<a href="/" class="home-button">Главная</a>
+<div class="main-container">
+    <div class="inner-container">
+        <h2>Добавление параметра</h2>
+        <form th:action="@{/admin/parameters/add}" method="post">
+            <div>
+                <input type="text" id="name" name="name" placeholder="Название" required>
+            </div>
+            <div>
+                <select id="type" name="type" required>
+                    <option value="" disabled selected>Выберите тип инфраструктуры</option>
+                    <option value="Инфраструктура общего пользования">Инфраструктура общего пользования</option>
+                    <option value="Инфраструктура необщего пользования">Инфраструктура необщего пользования</option>
+                </select>
+            </div>
+            <div>
+                <select id="costType" name="costType" required>
+                    <option value="" disabled selected>Выберите тип стоимости</option>
+                    <option value="Фиксированная">Фиксированная</option>
+                    <option value="Не фиксированная">Не фиксированная</option>
+                </select>
+            </div>
+            <div>
+                <input type="number" step="0.01" id="fixedCost" name="fixedCost" placeholder="Фиксированная стоимость"
+                       required min="0.01">
+            </div>
+            <button type="submit">Добавить параметр</button>
+        </form>
+    </div>
+
+    <div class="inner-container">
+        <h2>Удаление параметра</h2>
+        <form th:action="@{/admin/parameters/delete}" method="post">
+            <div>
+                <select id="id" name="id" required>
+                    <option value="" disabled selected>Параметр</option>
+                    <option th:each="parameter : ${parameters}"
+                            th:value="${parameter.id}"
+                            th:text="${parameter.name}"></option>
+                </select>
+            </div>
+            <button type="submit">Удалить параметр</button>
+        </form>
+        <div class="parameter-list" style="overflow-y: auto; max-height: 400px;">
+            <h3>Существующие параметры:</h3>
+            <ul>
+                <li th:each="parameter, iterStat : ${parameters}">
+                    <span th:text="${iterStat.count} + ' ' + ${parameter.name}"></span><br>
+                    <span th:text="'Тип стоимости: ' + ${parameter.costType} + ', Стоимость: ' + ${parameter.fixedCost}"></span><br>
+                    <span th:text="'Тип инфраструктуры: ' + ${parameter.type}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
